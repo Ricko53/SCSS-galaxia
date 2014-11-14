@@ -1,0 +1,307 @@
+@charset "UTF-8";
+
+@import url("http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+/*
+	* Autor: Ricardo Alves;
+	* Local: São Paulo - Brasil;
+	* Inspirações: ---;
+	* Data de início: 19/10/2014;
+	* Data de término: 10/11/2014;
+	* Línguagem: Português do Brasil (pt-br)
+*/
+
+// ==================== Variáveis (variables) ==================== //
+$bg-color: #2C3E50;
+
+// ==================== Mixins ==================== //
+
+// Keyframes
+@mixin animate($name, $duration) {
+	-webkit-animation: $name $duration*5/88#{s} linear infinite;
+	 		animation: $name $duration*5/88#{s} linear infinite;
+}
+
+@mixin state-animate($play-state : running) {
+	-webkit-animation-play-state: $play-state;
+			animation-play-state: $play-state;
+}
+
+@mixin keyframes($animate-name) {
+	@-webkit-keyframes #{$animate-name} { @content; }
+			@keyframes #{$animate-name} { @content; }
+}
+
+@mixin frames-rotate {
+	0% { @include transform(translate(-50%, -50%) rotate(0)); }
+	100% { @include transform(translate(-50%, -50%) rotate(360deg)); }
+}
+
+@mixin frames {
+	@content;
+}
+// ========== //
+
+// Mixins Padrão
+@mixin box-sizing($model) {
+	-webkit-box-sizing: $model;
+	   -moz-box-sizing: $model;
+			box-sizing: $model;
+}
+
+@mixin border-radius($radius...) {
+	-webkit-border-radius: $radius;
+	   -moz-border-radius: $radius;
+			border-radius: $radius;
+}
+
+@mixin box-shadow($shadows...) {
+	-webkit-box-shadow: $shadows;
+	   -moz-box-shadow: $shadows;
+			box-shadow: $shadows;
+}
+
+// linear-gradient simples
+@mixin linear-gradient($direction : to bottom, $from-color : #FFF, $to-color : #F0F0F0) {
+	background-color: $to-color; 
+	background-image: -webkit-linear-gradient($direction, $from-color, $to-color);
+	background-image:    -moz-linear-gradient($direction, $from-color, $to-color);
+	background-image:     -ms-linear-gradient($direction, $from-color, $to-color);
+	background-image:      -o-linear-gradient($direction, $from-color, $to-color);
+	background-image:         linear-gradient($direction, $from-color, $to-color);
+}
+
+// multiple linear-gradient
+@mixin mtp-linear-gradient($direction, $color...) {
+	background-color: $color; 
+	background-image: -webkit-linear-gradient($direction, $color);
+	background-image:    -moz-linear-gradient($direction, $color);
+	background-image:     -ms-linear-gradient($direction, $color);
+	background-image:      -o-linear-gradient($direction, $color);
+	background-image:         linear-gradient($direction, $color);
+}
+
+@mixin transform($transform...) {
+	-webkit-transform: $transform;
+	   -moz-transform: $transform;
+		-ms-transform: $transform;
+		 -o-transform: $transform;
+			transform: $transform;
+}
+
+@mixin transition($transition) {
+	-webkit-transition: $transition;
+	   -moz-transition: $transition;
+		 -o-transition: $transition;
+			transition: $transition;
+}
+
+// Mixins para Sistema Solar
+@mixin modelo($diametro) {
+	width: $diametro;
+	height: $diametro;
+}
+
+@mixin modelo-padrao($numero-child : 1, $diametro-orbita : 100px, $classe : null, $diametro-astro : 20px, $color : #E0E0E0) {
+	.orbita:nth-child(#{$numero-child}) {
+		@include modelo($diametro-orbita);
+
+		.#{$classe} {
+			@include modelo($diametro-astro);
+			background-color: $color;
+			@content;
+		}
+	}
+}
+
+/* ============================================================
+   Padrão (pattern)
+   ============================================================ */
+*, *::before, *::after { @include box-sizing(border-box); }
+
+html {
+
+	&, body { height:100%; }
+	body { background-color: $bg-color; overflow: hidden; }
+}
+
+ul { list-style-type: none; }
+
+//OBS: Por se tratar de um projeto simples e pessoal, estou usando a tag <i> para ícone, embora essa não seja a real função dela
+i { display: block; font-style: normal; text-indent: -99999px; }
+
+/* ============================================================
+   Sistema Solar (Solar System)
+   ============================================================ */
+
+.sistema {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	@include transform(scale(0.83));
+}
+
+// Classes padrão
+.orbita {
+	border: 1px solid lighten(rgba($bg-color, 0.5), 10);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	@include border-radius(100%);
+	@include transform(translate(-50%, -50%));
+	@include transition(all 0.2s linear);
+
+	&:hover {
+		@include transform(translate(-50%, -50%));
+		// @include state-animate(paused);
+		border: 1px solid darken(rgba($bg-color, 0.5), 5);
+	}
+}
+
+.astro {
+	position: absolute;
+	@include border-radius(100%);
+	@include transform(translate(-50%, -50%));
+	&.planeta { left: 50%; }
+}
+
+.sol {
+	@include modelo(50px);
+	background-color: #F1C40F;
+
+	-webkit-animation: luz-sol 3s linear infinite alternate;
+			animation: luz-sol 3s linear infinite alternate;
+}
+
+@-webkit-keyframes luz-sol {
+	from { @include box-shadow(0 0 50px rgba(#F1C40F, 0.5), 0 0 35px rgba(#E67E22, 0.5), inset 0 0 5px #E74C3C); }
+	to { @include box-shadow(0 0 150px 20px rgba(#F1C40F, 0.5), 0 0 160px rgba(#E67E22, 0.5), inset 0 0 20px #E74C3C); }
+}
+
+@keyframes luz-sol {
+	from { @include box-shadow(0 0 50px rgba(#F1C40F, 0.5), 0 0 35px rgba(#E67E22, 0.5), inset 0 0 5px #E74C3C); }
+	to { @include box-shadow(0 0 150px 20px rgba(#F1C40F, 0.5), 0 0 160px rgba(#E67E22, 0.5), inset 0 0 20px #E74C3C); }
+}
+
+/* ==============================
+   Sistema Solar | Planetas (planets)
+   ============================== */
+
+/* Mercúrio */
+@include modelo-padrao(10, 80px, mercurio, 5px, #BDC3C7) {
+	@include box-shadow(inset 0 0 10px #95A5A6);
+	@include transition(all 5s linear);
+}
+
+li:nth-child(10) { @include animate(orbita-mercurio, 88); }
+@include keyframes(orbita-mercurio) { @include frames-rotate; }
+
+// ===================== //
+
+/* Vênus */
+@include modelo-padrao(9, 130px, venus, 15px, #E16620) {
+	@include box-shadow(inset 0 0 10px #E1A940);
+	@include mtp-linear-gradient(to bottom, darken(rgba(#E16620, 0.5), 20) 30%, lighten(rgba(#E16620, 0.5), 20) 60%, rgba(#E16620, 0.5) 90%);
+}
+
+li:nth-child(9) { @include animate(orbita-venus, 225); }
+@include keyframes(orbita-venus) { @include frames-rotate; }
+
+/* Terra */
+@include modelo-padrao(8, 190px, terra, 20px, #17BF7D) {
+	// @include mtp-linear-gradient(50deg, rgba(#17BF7D, 0.5) 30%, #2A6CBD 35%, rgba(#17BF7D, 0.5) 45%, #2A6CBD 50%, rgba(#17BF7D, 0.5) 70%, #2A6CBD 75%);
+	
+	&::before {
+		content: "\f0ac";
+		font-family: "FontAwesome";
+		color: #2A6CBD;
+		display: block;
+		font-size: 25px;
+		text-indent: 0;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+	}
+}
+
+li:nth-child(8) {
+	@include animate(orbita-terra, 365);
+}
+
+
+@include keyframes(orbita-terra) { @include frames-rotate; }
+
+/* Marte */
+@include modelo-padrao(7, 240px, marte, 15px, #E74C3C) {
+	// @include box-shadow(inset 0 0 10px #C0392B);
+	@include mtp-linear-gradient(0, darken(#E74C3C, 5) 20%, darken(#E74C3C, 10) 40%, darken(#E74C3C, 5) 60%, darken(#E74C3C, 10) 80%, darken(#E74C3C, 5) 100%);
+}
+
+li:nth-child(7) { @include animate(orbita-marte, 687); }
+@include keyframes(orbita-marte) { @include frames-rotate; }
+
+// Cinturão de Asteróides
+.orbita:nth-child(6) {
+	@include modelo(300px);
+	border-width: 5px;
+	border-style: dotted;
+	text-indent: -99999px;
+}
+
+/* Júpiter */
+$jupiter-bg: #A38671;
+@include modelo-padrao(5, 400px, jupiter, 70px, $jupiter-bg) {
+	@include box-shadow(inset -3px 3px 3px rgba(255,255,255,0.3));
+	@include mtp-linear-gradient(45deg, $jupiter-bg 5%, darken($jupiter-bg, 5) 15%, lighten($jupiter-bg, 5) 20%, darken($jupiter-bg, 5) 25%, $jupiter-bg 30%, lighten($jupiter-bg, 5) 45%, $jupiter-bg 50%, darken($jupiter-bg, 5) 60%, lighten($jupiter-bg, 5) 65%, darken($jupiter-bg, 5) 70%, $jupiter-bg 75%, lighten($jupiter-bg, 5) 85%, $jupiter-bg 90%);
+}
+
+li:nth-child(5) { @include animate(orbita-jupiter, 4330); }
+@include keyframes(orbita-jupiter) { @include frames-rotate; }
+
+/* Saturno */
+@include modelo-padrao(4, 550px, saturno, 45px, $jupiter-bg) {
+	@include box-shadow(inset -3px 3px 3px -2px rgba(255,255,255,0.3));
+	@include mtp-linear-gradient(0, $jupiter-bg 5%, darken($jupiter-bg, 5) 15%, lighten($jupiter-bg, 5) 20%, darken($jupiter-bg, 5) 25%, $jupiter-bg 30%, lighten($jupiter-bg, 5) 45%, $jupiter-bg 50%, darken($jupiter-bg, 5) 60%, lighten($jupiter-bg, 5) 65%, darken($jupiter-bg, 5) 70%, $jupiter-bg 75%, lighten($jupiter-bg, 5) 85%, $jupiter-bg 90%);
+
+	&::before {
+		content: " ";
+		display: block;
+		@include modelo(65px);
+		border: 5px double #A09382;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+
+		@include border-radius(100%);
+		@include transform(translate(-50%, -50%));
+	}
+}
+
+li:nth-child(4) { @include animate(orbita-saturno, 10760); }
+@include keyframes(orbita-saturno) { @include frames-rotate; }
+
+/* Urano */
+@include modelo-padrao(3, 660px, urano, 20px, #CFF5F6) {
+	@include box-shadow(inset 0 0 10px #799BA4);
+}
+
+li:nth-child(3) { @include animate(orbita-urano, 30800); }
+@include keyframes(orbita-urano) { @include frames-rotate; }
+
+/* Netuno */
+@include modelo-padrao(2, 720px, netuno, 20px, #2A6CBD) {
+	@include box-shadow(inset 0 0 10px lighten(#2A6CBD, 20));
+}
+
+li:nth-child(2) { @include animate(orbita-netuno, 60190); }
+@include keyframes(orbita-netuno) { @include frames-rotate; }
+
+/* Plutao */
+@include modelo-padrao(1, 760px, plutao, 5px, #880);
+
+li:nth-child(1) { @include animate(orbita-plutao, 90614); }
+@include keyframes(orbita-plutao) { @include frames-rotate; }
