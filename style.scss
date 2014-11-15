@@ -8,7 +8,7 @@
 	* Date : 15/11/2014;
 */
 
-// ==================== Variáveis (variables) ==================== //
+// ==================== variables ==================== //
 $bg-color: #2C3E50;
 
 // ==================== Mixins ==================== //
@@ -112,7 +112,7 @@ $bg-color: #2C3E50;
 }
 
 /* ============================================================
-   Padrão (pattern)
+   pattern
    ============================================================ */
 *, *::before, *::after { @include box-sizing(border-box); }
 
@@ -128,7 +128,7 @@ ul { list-style-type: none; }
 i { display: block; font-style: normal; text-indent: -99999px; }
 
 /* ============================================================
-   Sistema Solar (Solar System)
+   Solar System
    ============================================================ */
 
 .sistema {
@@ -140,7 +140,7 @@ i { display: block; font-style: normal; text-indent: -99999px; }
 	@include transform(scale(0.83));
 }
 
-// Classes padrão
+// Classes padrao
 .orbita {
 	border: 1px solid lighten(rgba($bg-color, 0.5), 10);
 	position: absolute;
@@ -183,10 +183,10 @@ i { display: block; font-style: normal; text-indent: -99999px; }
 }
 
 /* ==============================
-   Sistema Solar | Planetas (planets)
+   planets
    ============================== */
 
-/* Mercúrio */
+/* Mercury */
 @include modelo-padrao(10, 80px, mercurio, 5px, #BDC3C7) {
 	@include box-shadow(inset 0 0 10px #95A5A6);
 	@include transition(all 5s linear);
@@ -241,7 +241,7 @@ li:nth-child(8) {
 li:nth-child(7) { @include animate(orbita-marte, 687); }
 @include keyframes(orbita-marte) { @include frames-rotate; }
 
-// Cinturão de Asteróides
+// Asteroid Belt
 .orbita:nth-child(6) {
 	@include modelo(300px);
 	border-width: 5px;
@@ -249,7 +249,7 @@ li:nth-child(7) { @include animate(orbita-marte, 687); }
 	text-indent: -99999px;
 }
 
-/* Júpiter */
+/* Jupiter */
 $jupiter-bg: #A38671;
 @include modelo-padrao(5, 400px, jupiter, 70px, $jupiter-bg) {
 	@include box-shadow(inset -3px 3px 3px rgba(255,255,255,0.3));
