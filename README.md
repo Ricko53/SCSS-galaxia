@@ -4,7 +4,7 @@
 
 ### 练习实践 ###
 
-在Codepens上看到一个非常有创意的用法，根据Template clone实践，在没有任何JS的情况下实现了动态Animation，[AprilZero](http://aprilzero.com/)效果相似，**[Original Demo](http://codepen.io/ricardo-front/pen/dPbmrj)**
+在Codepens上看到一个非常有创意的用法，根据Template clone实践，在没有任何JS的情况下实现了动态Animation，[AprilZero](http://aprilzero.com/)效果相似，**[Original Demo](http://mygalaxys.oschina.mopaas.com/)**
 
 ### SCSS 源文件解释 ###
 
